@@ -1,0 +1,75 @@
+//
+//  SignUp.swift
+//  watshealth
+//
+//  Created by mac on 11/5/24.
+//
+
+import SwiftUI
+
+struct SignUp: View {
+    @State private var email: String = ""
+    @State private var password: String = ""
+    @State private var username: String = ""
+    @State private var phoneNumber: String = ""
+    @State private var showForgotPassword: Bool = false
+    @State private var isGoogle: Bool = false
+    @State private var isApple: Bool = false
+    @State private var showLogin: Bool = false
+    @State private var showDashboard: Bool = false
+    
+    var body: some View {
+        NavigationStack{
+            VStack(alignment: .leading, spacing: 20){
+                Text("Sign up")
+                    .font(.title)
+                    .bold()
+                    .foregroundColor(Color.black)
+                Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
+                    .font(.caption)
+                Spacer()
+            }
+            .padding(.horizontal)
+            VStack(spacing: 20){
+                CustomTextField(label: "Your username", text: $username, isSecure: false)
+                CustomTextField(label: "Your phone number", text: $phoneNumber, isSecure: false)
+                CustomTextField(label: "Your email", text: $email, isSecure: false)
+                CustomTextField(label: "Your password", text: $password, isSecure: true)
+                
+                //Log in button
+                Button(action: {
+                    showDashboard = true
+                }){
+                    Text("Sign up")
+                        .font(.headline)
+                }
+                .buttonStyle(GradientButton())
+                .padding(.horizontal, 60)
+               .navigationDestination(isPresented: $showDashboard){
+                   Dashboard()
+                       .navigationBarBackButtonHidden(true)
+               }
+            }
+            HorizontalLine(label: "or Continue with")
+            IconButtonStyle(action: isGoogle,iconName: "google", labelText: "Sign up with Google", isIcon: false)
+            IconButtonStyle(action: isApple,iconName: "applelogo", labelText: "Sign up with Apple", isIcon: true)
+            HStack{
+                Text("Already have an account ?")
+                Button(action: {
+                    showLogin.toggle()
+                }){
+                    Text("Log in")
+                }
+                .navigationDestination(isPresented: $showLogin){
+                    Login()
+                }
+            }
+            Spacer()
+                .padding(.vertical, 0)
+        }
+    }
+}
+
+#Preview {
+    SignUp()
+}
