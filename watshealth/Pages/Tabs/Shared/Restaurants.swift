@@ -12,10 +12,10 @@ struct RestaurantsIndex:View {
     @State private var showDetails:Bool = false    
     var body: some View {
 //        NavigationView{
-            ScrollView{
-                VStack{
-                    CustomTextField(label: "Search for restaurant", text: $query, icon: "magnifyingglass", isSecure: false)
-                        .padding(.horizontal, 20)
+        VStack(alignment: .leading){
+                CustomTextField(label: "Search for restaurant", text: $query, icon: "magnifyingglass", isSecure: false)
+                    .padding(.horizontal, 20)
+                ScrollView{
                     HStack{
                         Text("Popular Restaurants")
                             .font(.title2)
@@ -26,7 +26,6 @@ struct RestaurantsIndex:View {
                     .padding(.horizontal,20)
                     .padding(.vertical, 20)
                     Spacer()
-
                     VStack(alignment: .leading){
                         ForEach(0..<10){index in
                             NavigationLink(destination: RestaurantDetail()){
@@ -83,8 +82,7 @@ struct RestaurantsIndex:View {
                     }
                     Spacer()
                 }
-            }
-            .padding(.vertical, 20)
+            }            
 //        }
     }
 }

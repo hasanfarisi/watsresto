@@ -11,23 +11,27 @@ struct FoodsIndex: View {
     @State var categories = ["Chicken", "Burger", "Pizza", "Gado-gado"]
     @State var query: String = ""
     var body: some View {
-        ScrollView{
-            VStack(alignment: .leading){
-                CustomTextField(label: "Search for foods", text: $query, icon: "magnifyingglass", isSecure: false)
+        VStack(alignment: .leading){
+            CustomTextField(label: "Search for foods", text: $query, icon: "magnifyingglass", isSecure: false)
+                .padding(.horizontal, 20)
+            ScrollView{
                 ForEach(0..<3){category in
-                    Text("\(categories[category])")
-                        .font(.title2)
-                        .padding(.vertical)
-                    ScrollView(.horizontal, showsIndicators: false){
-                        HStack{
-                            ForEach(0..<10){index in
-                                Meal(index: index)
+                    VStack(alignment: .leading){
+                        Text("\(categories[category])")
+                            .font(.title2)
+                            .padding(.vertical)
+                        ScrollView(.horizontal, showsIndicators: false){
+                            HStack{
+                                ForEach(0..<10){index in
+                                    Meal(index: index)
+                                }
                             }
                         }
                     }
                 }
                 Spacer()
-            }.padding(20)
+            }
+            .padding(20)
         }
     }
 }
@@ -136,5 +140,5 @@ struct Meal:View {
 }
 
 #Preview {
-    FoodDetail()
+    FoodsIndex()
 }

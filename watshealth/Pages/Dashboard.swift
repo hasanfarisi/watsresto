@@ -76,9 +76,9 @@ struct Dashboard: View {
                     
                     Text("")
                         .tabItem {
-                            Image(systemName: "person")
+                            Image(systemName: "cart.fill")
                                 .frame(width: 30)
-                            Text("Profile")
+                            Text("Cart")
                         }
                         .tag(3)
                 }
@@ -101,7 +101,7 @@ struct TabViewContent: View {
             case 2:
                 RestaurantsIndex()
             case 3:
-                ProfileView()
+                Cart()
             default:
                 Home()
             }
@@ -111,13 +111,6 @@ struct TabViewContent: View {
     }
 }
 
-struct SearchView: View {
-    var body: some View {
-        Text("Search Content")
-            .font(.largeTitle)
-            .padding()
-    }
-}
 
 struct ProfileView: View {
     var body: some View {
