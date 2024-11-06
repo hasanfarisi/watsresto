@@ -97,7 +97,7 @@ struct TabViewContent: View {
             case 0:
                 Home()
             case 1:
-                Foods()
+                FoodsIndex()
             case 2:
                 RestaurantsIndex()
             case 3:

@@ -28,9 +28,9 @@ struct Login: View {
             }
             .padding(.horizontal)
             VStack(spacing: 20){
-                CustomTextField(label: "Your email", text: $email, isSecure: false)
+                CustomTextField(label: "Your email", text: $email,icon: "person.fill", isSecure: false)
                     .padding(.horizontal)
-                CustomTextField(label: "Your password", text: $password, isSecure: true)
+                CustomTextField(label: "Your password", text: $password,icon: "lock.fill", isSecure: true)
                     .padding(.horizontal)
                 Button(action: {
                     showForgotPassword = true

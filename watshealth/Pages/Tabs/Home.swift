@@ -15,7 +15,7 @@ struct Home: View {
                 SliderPromos(promos: ["promo1", "promo1"])
                     .padding(.vertical)
                 Spacer()
-                CustomTextField(label: "Search for food, restaurants...", text: $query, isSecure: false)
+                CustomTextField(label: "Search for food, restaurants...", text: $query,icon: "magnifyingglass", isSecure: false)
                 BestOffer()
                 Spacer()
                     .padding(.vertical, 2)

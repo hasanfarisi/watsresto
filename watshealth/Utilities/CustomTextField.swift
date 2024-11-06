@@ -10,30 +10,33 @@ import SwiftUI
 struct CustomTextField: View {
     let label: String
     @Binding var text: String
+    let icon: String
     var isSecure: Bool = false
     
     var body: some View {
         VStack(){
-//            Text(label)
-//                .foregroundColor(Color(hex: "252525"))
-//                .font(.headline)
             
-            if isSecure {
-                SecureField(label, text: $text)
-                    .padding(15)
-                    .background(Color(hex: "E9F6FE"))
-                    .cornerRadius(8)
-                    .autocorrectionDisabled(true)
-                    .autocapitalization(.none)
-            }else {
-                TextField(label, text: $text)
-                    .padding(15)
-                    .background(Color(hex: "E9F6FE"))
-                    .cornerRadius(8)
-                    .autocorrectionDisabled(true)                    
-                    .autocapitalization(.none)
-            }
+            HStack {
+                Image(systemName: "\(icon)")
+                    .foregroundColor(.gray)
+                    .padding(.leading, 8)
+                
+                if isSecure {
+                    SecureField(label, text: $text)
+                        .padding(15)
+                        .autocorrectionDisabled(true)
+                        .autocapitalization(.none)
+                }else{
+                    TextField(label, text: $text)
+                        .padding(15)
+                        .autocorrectionDisabled(true)
+                        .autocapitalization(.none)
+                }
+            }            
+            .overlay(
+                RoundedRectangle(cornerRadius: 0)
+                    .stroke(Color.gray.opacity(0.4), lineWidth: 1)
+            )
         }
-//        .padding(.horizontal)
     }
 }

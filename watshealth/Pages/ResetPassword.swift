@@ -23,8 +23,8 @@ struct ResetPassword: View {
             }
             .padding(.horizontal)
             VStack(spacing: 20){
-                CustomTextField(label: "Enter new password", text: $password, isSecure: true)
-                CustomTextField(label: "Repeat new password", text: $repeatPassword, isSecure: true)
+                CustomTextField(label: "Enter new password", text: $password,icon: "magnifyingglass", isSecure: true)
+                CustomTextField(label: "Repeat new password", text: $repeatPassword,icon: "magnifyingglass", isSecure: true)
                 
                 //Log in button
                 Button(action: {

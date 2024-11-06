@@ -31,13 +31,13 @@ struct SignUp: View {
             }
             .padding(.horizontal)
             VStack(spacing: 20){
-                CustomTextField(label: "Your username", text: $username, isSecure: false)
+                CustomTextField(label: "Your username", text: $username,icon: "person.fill", isSecure: false)
                     .padding(.horizontal)
-                CustomTextField(label: "Your phone number", text: $phoneNumber, isSecure: false)
+                CustomTextField(label: "Your phone number", text: $phoneNumber,icon: "phone.fill", isSecure: false)
                     .padding(.horizontal)
-                CustomTextField(label: "Your email", text: $email, isSecure: false)
+                CustomTextField(label: "Your email", text: $email,icon: "at.circle.fill", isSecure: false)
                     .padding(.horizontal)
-                CustomTextField(label: "Your password", text: $password, isSecure: true)
+                CustomTextField(label: "Your password", text: $password,icon: "lock.fill", isSecure: true)
                     .padding(.horizontal)
                 
                 //Log in button

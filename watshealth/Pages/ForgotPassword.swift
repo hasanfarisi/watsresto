@@ -24,7 +24,7 @@ struct ForgotPassword: View {
             }
             .padding(.horizontal)
             VStack(spacing: 20){
-                CustomTextField(label: "Enter your email", text: $email, isSecure: false)
+                CustomTextField(label: "Enter your email", text: $email,icon: "magnifyingglass", isSecure: false)
                 
                 //Log in button
                 Button(action: {

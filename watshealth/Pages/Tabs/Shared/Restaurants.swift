@@ -9,11 +9,13 @@ import SwiftUI
 
 struct RestaurantsIndex:View {
     @State private var query: String = ""
-    @State private var showDetails:Bool = false
+    @State private var showDetails:Bool = false    
     var body: some View {
 //        NavigationView{
             ScrollView{
                 VStack{
+                    CustomTextField(label: "Search for restaurant", text: $query, icon: "magnifyingglass", isSecure: false)
+                        .padding(.horizontal, 20)
                     HStack{
                         Text("Popular Restaurants")
                             .font(.title2)
@@ -22,6 +24,7 @@ struct RestaurantsIndex:View {
                             .font(.caption)
                     }
                     .padding(.horizontal,20)
+                    .padding(.vertical, 20)
                     Spacer()
 
                     VStack(alignment: .leading){
