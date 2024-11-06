@@ -8,135 +8,121 @@
 import SwiftUI
 
 struct Dashboard: View {
+    @State public var selectedTab:Int = 0
     var body: some View {
-        ZStack{
-            TabView{
-                Home()
-                    .tabItem{
-                        Image(systemName: "house.fill")
-                            .foregroundColor(Color.gray)
-                        Text("Home")
+//        NavigationStack{
+            VStack(spacing: 0) {
+                // Header Toolbar
+                HStack {
+                    Button(action: {
+                        print("Menu tapped")
+                    }) {
+                        Image(systemName: "line.horizontal.3")
+                            .font(.title2)
+                            .foregroundColor(.primary)
                     }
-                Home()
-                    .tabItem{
-                        Image(systemName: "magnifyingglass")
-                            .foregroundColor(Color.gray)
-                        Text("Search")
+                    
+                    Spacer()
+                    
+                    HStack{
+                        Image("vector2")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 40)
+                        Image("watsresto")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 100, height: 40)
                     }
-                Home()
-                    .tabItem{
-                        Image(systemName: "cart.fill")
-                            .foregroundColor(Color.gray)
-                        Text("Chart")
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        print("Profile tapped")
+                    }) {
+                        Image("profile")
+                            .renderingMode(.original)
+                            .resizable()
+                            .frame(width: 35, height: 35)
+                            .clipShape(Circle())
                     }
-            }
-        }
-    }
-}
-
-struct Home: View {
-    var body: some View {
-        NavigationView{
-            Content()
-                .navigationBarItems(
-                    leading:
-                        HStack{
-                            Button(action: {
-                                
-                            }, label: {
-                                Image(systemName: "line.horizontal.3")
-                                    .resizable()
-                                    .frame(width: 24, height: 24)
-                                    .foregroundColor(.primary)
-                            })
-                        },
-                    trailing:
-                        HStack{
-                            Button(action: {print("button 1")}){
-                                Image("profile")
-                                    .renderingMode(.original)
-                                    .resizable()
-                                    .frame(width: 35, height: 35)
-                                    .clipShape(.circle)
-                            }
+                }
+                .padding()
+                TabViewContent(selectedTab: selectedTab)                
+                TabView(selection: $selectedTab) {
+                    Text("")
+                        .tabItem {
+                            Image(systemName: "house")
+                                .frame(width: 30)
+                            Text("Home")
                         }
-                )
-                .navigationBarTitle("", displayMode: .inline)
-        }
-        .navigationViewStyle(StackNavigationViewStyle())
-    }
-}
-
-struct Content:View {
-    @State private var query = ""
-    var body: some View {
-        ScrollView{
-            VStack{
-                SliderPromos(promos: ["promo1", "promo1"])
-                    .padding(.vertical)
-                Spacer()
-                CustomTextField(label: "Search for food, restaurants...", text: $query, isSecure: false)
-                BestOffer()
-                Spacer()
-                    .padding(.vertical, 2)
-                RestaurantsNearby()
+                        .tag(0)
+                    
+                    Text("")
+                        .tabItem {
+                            Image(systemName: "fork.knife")
+                                .frame(width: 30)
+                            Text("Foods")
+                        }
+                        .tag(1)
+                    
+                    Text("")
+                        .tabItem {
+                            Image(systemName: "building.columns")
+                                .frame(width: 30)
+                            Text("Restaurants")
+                        }
+                        .tag(2)
+                    
+                    Text("")
+                        .tabItem {
+                            Image(systemName: "person")
+                                .frame(width: 30)
+                            Text("Profile")
+                        }
+                        .tag(3)
+                }
+                .frame(height: 90)
             }
-            .padding(.horizontal)
+            .ignoresSafeArea(edges: .bottom) // Keeps TabView flush with bottom
         }
-    }
+//    }
 }
 
-struct BestOffer:View {
+struct TabViewContent: View {
+    let selectedTab: Int
     var body: some View {
-        HStack{
-            Text("Best Offers")
-                .font(.title2)
-            Image("hot")
-            Spacer()
-            Button(action: {}, label: {
-                HStack{
-                    Text("See all")
-                    Image(systemName: "chevron.forward")
-                }
-                .foregroundColor(Color.gray)
-            })
-        }
-        Spacer()
-        ScrollView(.horizontal, showsIndicators: false){
-            HStack{
-                ForEach(0..<5){ index in
-                    BestOfferProducts(imgMenu: "menu1", title: "Food\(index)", detail: "lorem ipsum", price: "\(28000*index)")
-                }
-            }
-        }
-    }
-}
-
-struct RestaurantsNearby:View {
-    var body: some View {
-        HStack{
-            Text("Restaurants Nearby")
-                .font(.title2)
-            Spacer()
-            Button(action: {}, label: {
-                HStack{
-                    Text("See all")
-                    Image(systemName: "chevron.forward")
-                }
-                .foregroundColor(Color.gray)
-            })
-        }
-        Spacer()
-        ScrollView(.horizontal, showsIndicators: false){
-            HStack{
-                ForEach(0..<5){ index in
-                    Restaurants(imgRestaurant: "restaurant1", title: "Restaurant name \(index)", stars: "4.8")
-                }
+        VStack {
+            switch selectedTab {
+            case 0:
+                Home()
+            case 1:
+                Foods()
+            case 2:
+                RestaurantsIndex()
+            case 3:
+                ProfileView()
+            default:
+                Home()
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.white) // Optional: Background for content area
     }
 }
 
-#Preview {
-    Dashboard()
+struct SearchView: View {
+    var body: some View {
+        Text("Search Content")
+            .font(.largeTitle)
+            .padding()
+    }
+}
+
+struct ProfileView: View {
+    var body: some View {
+        Text("Profile Content")
+            .font(.largeTitle)
+            .padding()
+    }
 }

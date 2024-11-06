@@ -34,6 +34,6 @@ struct CustomTextField: View {
                     .autocapitalization(.none)
             }
         }
-        .padding(.horizontal)
+//        .padding(.horizontal)
     }
 }

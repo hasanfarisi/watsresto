@@ -29,7 +29,9 @@ struct Login: View {
             .padding(.horizontal)
             VStack(spacing: 20){
                 CustomTextField(label: "Your email", text: $email, isSecure: false)
+                    .padding(.horizontal)
                 CustomTextField(label: "Your password", text: $password, isSecure: true)
+                    .padding(.horizontal)
                 Button(action: {
                     showForgotPassword = true
                 }){
@@ -52,7 +54,7 @@ struct Login: View {
                 .buttonStyle(GradientButton())
                 .padding(.horizontal, 60)
                 .navigationDestination(isPresented: $showDashboard){
-                    Dashboard()
+                    Dashboard(selectedTab: 0)
                         .navigationBarBackButtonHidden(true)
                 }
             }

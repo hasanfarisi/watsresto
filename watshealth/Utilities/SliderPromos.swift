@@ -36,13 +36,3 @@ struct SliderPromos: View {
 #Preview {
     SliderPromos(promos: [""])
 }
-
-//Button(
-//    action: {
-//        
-//    }, label: {
-//        Image("display1")
-//            .resizable()
-//            .aspectRatio(contentMode: .fill)
-//            .frame(height: 50)
-//})
