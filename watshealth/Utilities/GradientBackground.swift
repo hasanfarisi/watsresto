@@ -17,6 +17,15 @@ struct GradientBackground: View {
     }
 }
 
+struct ImageBackground: View {
+    var body: some View {
+        Image("pattern")
+            .resizable()
+            .scaledToFill()
+            .ignoresSafeArea()
+    }
+}
+
 extension Color{
     init(hex: String){
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)

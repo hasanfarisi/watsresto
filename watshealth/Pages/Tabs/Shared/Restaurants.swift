@@ -125,6 +125,7 @@ struct RestaurantsFooter: View {
 }
 
 struct RestaurantDetail: View {
+    @State private var showReservation:Bool = false
     var body: some View {
         ZStack(alignment: .bottomLeading){
             ScrollView{
@@ -191,17 +192,20 @@ struct RestaurantDetail: View {
             }
             
             Button (action:{
-                
+                showReservation = true
             }){
                 Text("View Available Tables")
                     .font(.headline)
             }
             .buttonStyle(GradientButton())
             .padding(.horizontal, 40)
+            .navigationDestination(isPresented: $showReservation){
+                ReservationTable()
+            }
         }
     }
 }
 
 #Preview {
-    RestaurantsIndex()
+    RestaurantDetail()
 }

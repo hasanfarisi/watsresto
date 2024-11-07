@@ -37,6 +37,7 @@ struct FoodsIndex: View {
 }
 
 struct FoodDetail: View {
+    @State private var isCartShow: Bool = false
     var body: some View {
         ZStack(alignment: .bottomLeading){
             ScrollView{
@@ -92,13 +93,16 @@ struct FoodDetail: View {
                 .padding(.vertical)
             }
             Button (action:{
-                
+                isCartShow = true
             }){
                 Text("Add to Cart")
                     .font(.headline)
             }
             .buttonStyle(GradientButton())
             .padding(.horizontal, 40)
+            .navigationDestination(isPresented: $isCartShow){
+                Cart()
+            }
         }
     }
 }

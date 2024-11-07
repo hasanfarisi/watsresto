@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct Cart: View {
+    @State private var isOrderComplete:Bool = false
     var body: some View {
         VStack{
             ScrollView{
@@ -16,6 +17,8 @@ struct Cart: View {
                         Text("Order details")
                             .font(.title2)
                         Spacer()
+                        Text("10 Items")
+                            .font(.caption)
                     }
                     .padding(.horizontal,20)
                     .padding(.vertical, 20)
@@ -56,12 +59,18 @@ struct Cart: View {
                     .font(.title3)
                     .padding(.horizontal,20)
                     .padding(.vertical,10)
-                    Button(action: {}){
+                    Button(action: {
+                        isOrderComplete = true
+                    }){
                         Text("Place My Order")
                             .font(.callout)
                     }
                     .buttonStyle(FlatButton())
                     .padding(10)
+                    .navigationDestination(isPresented: $isOrderComplete){
+                        OrderComplete()
+                            .navigationBarBackButtonHidden(true)
+                    }
                 }
                 .padding(.horizontal,20)
                 .foregroundColor(Color.white)
