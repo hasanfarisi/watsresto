@@ -14,9 +14,8 @@ struct SignUp: View {
     @State private var phoneNumber: String = ""
     @State private var showForgotPassword: Bool = false
     @State private var isGoogle: Bool = false
-    @State private var isApple: Bool = false
-    @State private var showLogin: Bool = false
-    @State private var showDashboard: Bool = false
+    @State private var isApple: Bool = false    
+    @EnvironmentObject var viewRouter: ViewRouter
     
     var body: some View {
         NavigationStack{
@@ -42,17 +41,14 @@ struct SignUp: View {
                 
                 //Log in button
                 Button(action: {
-                    showDashboard = true
+                    viewRouter.numberOfPage = 0 //Home
+                    viewRouter.currentPage = .dashboard
                 }){
                     Text("Sign up")
                         .font(.headline)
                 }
                 .buttonStyle(GradientButton())
                 .padding(.horizontal, 60)
-               .navigationDestination(isPresented: $showDashboard){
-                   Dashboard()
-                       .navigationBarBackButtonHidden(true)
-               }
             }
             HorizontalLine(label: "or Continue with")
             IconButtonStyle(action: isGoogle,iconName: "google", labelText: "Sign up with Google", isIcon: false)
@@ -60,12 +56,10 @@ struct SignUp: View {
             HStack{
                 Text("Already have an account ?")
                 Button(action: {
-                    showLogin.toggle()
+                    viewRouter.numberOfPage = 0 //Login
+                    viewRouter.currentPage = .authentication
                 }){
                     Text("Log in")
-                }
-                .navigationDestination(isPresented: $showLogin){
-                    Login()
                 }
             }
             Spacer()

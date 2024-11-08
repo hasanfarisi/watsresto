@@ -10,13 +10,14 @@ import SwiftUI
 struct OrderComplete: View {
     @State private var feedback:String = ""
     @State private var isShowing:Bool = false
+    
     var body: some View {
-        NavigationStack{
+//        NavigationStack{
             ImageBackground()
                 .overlay(
                     VStack{
                         Image("iconCheck")
-                        Text("Text You!")
+                        Text("Thank You!")
                             .font(.largeTitle)
                             .foregroundColor(Color(hex: "004422"))
                         Text("Order Completed")
@@ -58,7 +59,7 @@ struct OrderComplete: View {
                         .padding(.horizontal, 30)
                     }
                 )
-        }
+//        }
     }
 }
 
@@ -90,7 +91,7 @@ struct ReservedComplete:View {
                         .padding(.horizontal, 40)
                         .padding(.vertical)
                         .navigationDestination(isPresented: $showFood){
-                            Dashboard(selectedTab: 3)
+                            Dashboard(selectedTab: 2)
                                 .navigationBarBackButtonHidden(true)
                         }
                     }

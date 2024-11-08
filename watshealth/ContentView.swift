@@ -8,29 +8,23 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var showSplash = true
+    @EnvironmentObject var viewRouter: ViewRouter
     var body: some View {
-        ZStack{
-//            if showSplash{
-//                SplashScreen()
-//                    .transition(.opacity)
-//                    .animation(.easeOut(duration: 1.5))
-//            }else{
-                Welcome()
-            //Dashboard()
-            //}
-        }
-        .onAppear{
-            DispatchQueue.main
-                .asyncAfter(deadline: .now() + 3){
-                    withAnimation{
-                        self.showSplash = false
+        NavigationStack {
+            ZStack{
+                if viewRouter.currentPage == .main || viewRouter.currentPage == nil {
+                    Welcome()
+                } else if viewRouter.currentPage == .dashboard {
+                    Dashboard(selectedTab: viewRouter.numberOfPage)
+                        .environmentObject(viewRouter)
+                } else if viewRouter.currentPage == .authentication {
+                    if viewRouter.numberOfPage == 0 {
+                        Login()
+                    }else{
+                        SignUp()
                     }
                 }
+            }
         }
     }
-}
-
-#Preview {
-    ContentView()
 }

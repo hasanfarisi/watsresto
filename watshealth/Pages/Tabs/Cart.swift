@@ -68,8 +68,8 @@ struct Cart: View {
                     .buttonStyle(FlatButton())
                     .padding(10)
                     .navigationDestination(isPresented: $isOrderComplete){
-                        OrderComplete()
-                            .navigationBarBackButtonHidden(true)
+                        Payment()
+                            .environmentObject(ViewRouter())
                     }
                 }
                 .padding(.horizontal,20)

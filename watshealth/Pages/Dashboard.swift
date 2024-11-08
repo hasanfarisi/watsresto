@@ -9,10 +9,11 @@ import SwiftUI
 
 struct Dashboard: View {
     @State public var selectedTab:Int = 0
+    @State private var isProfileShow:Bool = false
+    
     var body: some View {
 //        NavigationStack{
-            VStack(spacing: 0) {
-                // Header Toolbar
+            VStack(spacing: 0) {                
                 HStack {
                     Button(action: {
                         print("Menu tapped")
@@ -38,17 +39,20 @@ struct Dashboard: View {
                     Spacer()
                     
                     Button(action: {
-                        print("Profile tapped")
+                        isProfileShow = true
                     }) {
                         Image("profile")
                             .renderingMode(.original)
                             .resizable()
                             .frame(width: 35, height: 35)
                             .clipShape(Circle())
+                    }.navigationDestination(isPresented: $isProfileShow){
+                        Dashboard(selectedTab: 4)
                     }
                 }
                 .padding()
-                TabViewContent(selectedTab: selectedTab)                
+                TabViewContent(selectedTab: selectedTab)
+                
                 TabView(selection: $selectedTab) {
                     Text("")
                         .tabItem {
@@ -102,20 +106,17 @@ struct TabViewContent: View {
                 RestaurantsIndex()
             case 3:
                 Cart()
+            case 4:
+                Profile()
+            case 5:
+                OrderComplete()
+            case 6:
+                Login()
             default:
                 Home()
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.white) // Optional: Background for content area
-    }
-}
-
-
-struct ProfileView: View {
-    var body: some View {
-        Text("Profile Content")
-            .font(.largeTitle)
-            .padding()
+        .background(Color.white)
     }
 }

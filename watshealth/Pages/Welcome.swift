@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct Welcome: View {
-    @State private var showLogin: Bool = false
     @State private var showRegister: Bool = false
+    @EnvironmentObject var viewRouter: ViewRouter
+    
     var body: some View {
         NavigationStack{
             VStack(spacing: 20){
@@ -23,29 +24,25 @@ struct Welcome: View {
                 
                 //Log in button
                 Button(action: {
-                    showLogin = true
+                    viewRouter.numberOfPage = 0 //Login
+                    viewRouter.currentPage = .authentication
                 }){
                     Text("Login")
                         .font(.headline)
                 }
                 .buttonStyle(GradientButton())
                 .padding(.horizontal, 60)
-                .navigationDestination(isPresented: $showLogin){
-                    Login()
-                }
                 
                 //Sign up button
                 Button(action: {
-                    showRegister = true
+                    viewRouter.numberOfPage = 1 // Signup
+                    viewRouter.currentPage = .authentication
                 }){
                     Text("Sign Up")
                         .font(.headline)
                 }
                 .buttonStyle(FlatButton())
                 .padding(.horizontal, 60)
-                .navigationDestination(isPresented: $showRegister){
-                    SignUp()
-                }
             }
         }
     }

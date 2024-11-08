@@ -10,6 +10,7 @@ import SwiftUI
 struct FoodsIndex: View {
     @State var categories = ["Chicken", "Burger", "Pizza", "Gado-gado"]
     @State var query: String = ""
+    @EnvironmentObject var viewRouter: ViewRouter
     var body: some View {
         VStack(alignment: .leading){
             CustomTextField(label: "Search for foods", text: $query, icon: "magnifyingglass", isSecure: false)
@@ -24,6 +25,7 @@ struct FoodsIndex: View {
                             HStack{
                                 ForEach(0..<10){index in
                                     Meal(index: index)
+                                        .environmentObject(viewRouter)
                                 }
                             }
                         }
@@ -37,13 +39,13 @@ struct FoodsIndex: View {
 }
 
 struct FoodDetail: View {
-    @State private var isCartShow: Bool = false
+    @EnvironmentObject var viewRouter: ViewRouter
     var body: some View {
         ZStack(alignment: .bottomLeading){
             ScrollView{
                 Image("menuDetail1")
                     .resizable()                    
-                    .frame(width: .infinity, height: 250)
+                    .frame(height: 250)
                 VStack(alignment: .leading){
                     HStack{
                         Button(action: {
@@ -85,6 +87,7 @@ struct FoodDetail: View {
                         HStack{
                             ForEach(0..<5){ index in
                                 Meal(index: index)
+                                    .environmentObject(viewRouter)
                             }
                         }
                     }
@@ -93,24 +96,26 @@ struct FoodDetail: View {
                 .padding(.vertical)
             }
             Button (action:{
-                isCartShow = true
+                viewRouter.numberOfPage = 3 //Cart
+                viewRouter.currentPage = .dashboard
             }){
                 Text("Add to Cart")
                     .font(.headline)
             }
             .buttonStyle(GradientButton())
             .padding(.horizontal, 40)
-            .navigationDestination(isPresented: $isCartShow){
-                Cart()
-            }
         }
     }
 }
 
 struct Meal:View {
     let index:Int
+    @State private var showFoodDetail:Bool = false
+    @EnvironmentObject var viewRouter: ViewRouter
     var body: some View {
-        NavigationLink(destination: FoodDetail()){
+        Button (action:{
+            showFoodDetail = true
+        }){
             ZStack{
                 RoundedRectangle(cornerRadius: 16)
                     .fill(Color.white)
@@ -139,6 +144,10 @@ struct Meal:View {
                 .foregroundColor(Color.black)
             }
             .frame(width: 150, height: 250)
+        }
+        .navigationDestination(isPresented: $showFoodDetail){
+            FoodDetail()
+                .environmentObject(viewRouter)
         }
     }
 }
