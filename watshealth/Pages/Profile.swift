@@ -41,7 +41,7 @@ struct Profile: View {
                                     .font(.title2)
                                     .bold()
                                 VStack(alignment: .leading){
-                                    LabelDescriptionView(label: "Phone number", description: "+62 82127662477")
+                                    LabelDescriptionView(label: "Phone number", description: "+62 86778659908")
                                                 .previewLayout(.sizeThatFits)
                                     LabelDescriptionView(label: "Email", description: "risyad@gmail.com")
                                                 .previewLayout(.sizeThatFits)

@@ -100,10 +100,11 @@ struct RestaurantsFooter: View {
     @State public var imgRestaurant:String = ""
     @State public var title:String = ""
     @State public var stars:String = ""
-    @State private var showDetails:Bool = false
+    @EnvironmentObject var viewRouter: ViewRouter
     var body: some View {
         Button(action: {
-            showDetails = true
+            viewRouter.numberOfPage = 21
+            viewRouter.currentPage = .dashboard
         }, label: {
             VStack{
                 Image(imgRestaurant)
@@ -127,10 +128,6 @@ struct RestaurantsFooter: View {
             }
             Spacer()
         })
-        .navigationDestination(isPresented: $showDetails){
-            RestaurantDetail()
-                .environmentObject(ViewRouter())
-        }
     }
 }
 
