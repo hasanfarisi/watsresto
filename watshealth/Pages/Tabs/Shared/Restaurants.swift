@@ -9,7 +9,8 @@ import SwiftUI
 
 struct RestaurantsIndex:View {
     @State private var query: String = ""
-    @State private var showDetails:Bool = false    
+    @State private var showDetails:Bool = false
+    @EnvironmentObject var viewRouter: ViewRouter
     var body: some View {
 //        NavigationView{
         VStack(alignment: .leading){
@@ -28,55 +29,11 @@ struct RestaurantsIndex:View {
                     Spacer()
                     VStack(alignment: .leading){
                         ForEach(0..<10){index in
-                            NavigationLink(destination: RestaurantDetail()){
-                                ZStack{
-                                    RoundedRectangle(cornerRadius: 16)
-                                        .fill(Color.white)
-                                        .shadow(color: Color.gray.opacity(0.1), radius: 10, x: 0, y: 5)
-                                        .frame(height: 150)
-                                    VStack{
-                                        HStack{
-                                            Image("restaurant1")
-                                            VStack(alignment: .leading){
-                                                Text("Restaurant name \(index)")
-                                                    .font(.callout)
-                                                    .foregroundColor(Color.black)
-                                                HStack{
-                                                    ForEach(0..<5){star in
-                                                        Image(systemName: "star.fill")
-                                                            .foregroundColor(Color.orange)
-                                                            .font(.system(size: 8))
-                                                    }
-                                                }
-                                                Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor consectetur adipiscing elit")
-                                                    .font(.caption2)
-                                                    .foregroundColor(Color.black)
-                                                    .multilineTextAlignment(.leading)
-                                                Spacer()
-                                            }
-                                        }
-                                        HStack{
-                                            Image(systemName: "pin.fill")
-                                                .font(.caption)
-                                            Text("1,2 Km from location")
-                                                .font(.caption)
-                                            Spacer()
-                                            Button {
-                                                
-                                            } label: {
-                                                Text("View on Google Maps")
-                                                    .foregroundColor(Color.purple)
-                                                    .font(.caption)
-                                            }
-                                            
-                                        }
-                                        .foregroundColor(Color.black)
-                                    }
-                                    .padding()
-                                }
-                            }
-                            .navigationDestination(isPresented: $showDetails){
-                                RestaurantDetail()
+                            Button(action: {
+                                viewRouter.numberOfPage = 21
+                                viewRouter.currentPage = .dashboard
+                            }){
+                                Restaurants(index: index)
                             }
                         }
                     }
@@ -84,6 +41,58 @@ struct RestaurantsIndex:View {
                 }
             }            
 //        }
+    }
+}
+
+struct Restaurants:View {
+    let index:Int
+    
+    var body: some View {
+        ZStack{
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color.white)
+                .shadow(color: Color.gray.opacity(0.1), radius: 10, x: 0, y: 5)
+                .frame(height: 150)
+            VStack{
+                HStack{
+                    Image("restaurant1")
+                    VStack(alignment: .leading){
+                        Text("Restaurant name \(index)")
+                            .font(.callout)
+                            .foregroundColor(Color.black)
+                        HStack{
+                            ForEach(0..<5){star in
+                                Image(systemName: "star.fill")
+                                    .foregroundColor(Color.orange)
+                                    .font(.system(size: 8))
+                            }
+                        }
+                        Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor consectetur adipiscing elit")
+                            .font(.caption2)
+                            .foregroundColor(Color.black)
+                            .multilineTextAlignment(.leading)
+                        Spacer()
+                    }
+                }
+                HStack{
+                    Image(systemName: "pin.fill")
+                        .font(.caption)
+                    Text("1,2 Km from location")
+                        .font(.caption)
+                    Spacer()
+                    Button {
+                        
+                    } label: {
+                        Text("View on Google Maps")
+                            .foregroundColor(Color.purple)
+                            .font(.caption)
+                    }
+                    
+                }
+                .foregroundColor(Color.black)
+            }
+            .padding()
+        }
     }
 }
 
@@ -120,12 +129,14 @@ struct RestaurantsFooter: View {
         })
         .navigationDestination(isPresented: $showDetails){
             RestaurantDetail()
+                .environmentObject(ViewRouter())
         }
     }
 }
 
 struct RestaurantDetail: View {
-    @State private var showReservation:Bool = false
+    @EnvironmentObject var viewRouter: ViewRouter
+    
     var body: some View {
         ZStack(alignment: .bottomLeading){
             ScrollView{
@@ -192,20 +203,19 @@ struct RestaurantDetail: View {
             }
             
             Button (action:{
-                showReservation = true
+                viewRouter.currentPage = .dashboard
+                viewRouter.numberOfPage = 22
             }){
                 Text("View Available Tables")
                     .font(.headline)
             }
             .buttonStyle(GradientButton())
             .padding(.horizontal, 40)
-            .navigationDestination(isPresented: $showReservation){
-                ReservationTable()
-            }
         }
     }
 }
 
 #Preview {
-    RestaurantDetail()
+    RestaurantsIndex()
+        .environmentObject(ViewRouter())
 }

@@ -10,7 +10,8 @@ import SwiftUI
 struct ReservationTable: View {
     @State private var isMainRoom: Bool = true
     @State private var selectedTable: Int? = nil
-    @State private var showReservation:Bool = false
+    @EnvironmentObject var viewRouter: ViewRouter
+    
     var body: some View {
         VStack{
             HStack(spacing: 0) {
@@ -115,17 +116,14 @@ struct ReservationTable: View {
                 }
             }
             Button (action:{
-                showReservation = true
+                viewRouter.currentPage = .dashboard
+                viewRouter.numberOfPage = 51
             }){
                 Text("Reserve the Table")
                     .font(.headline)
             }
             .buttonStyle(GradientButton())
             .padding(.horizontal, 40)
-            .navigationDestination(isPresented: $showReservation){
-                ReservedComplete()
-                    .navigationBarBackButtonHidden(true)
-            }
         }
     }
 }

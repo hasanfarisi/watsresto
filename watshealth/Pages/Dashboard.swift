@@ -52,12 +52,20 @@ struct Dashboard: View {
                 FoodDetail()                    
             case 2:
                 RestaurantsIndex()
+            case 21:
+                RestaurantDetail()
+            case 22:
+                ReservationTable()
             case 3:
                 Cart()
             case 4:
                 Profile()
+            case 41:
+                ProfileForm()
             case 5:
                 OrderComplete()
+            case 51:
+                ReservedComplete()
             case 6:
                 Login()
             case 7:

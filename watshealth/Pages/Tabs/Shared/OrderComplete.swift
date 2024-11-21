@@ -63,7 +63,7 @@ struct OrderComplete: View {
 }
 
 struct ReservedComplete:View {
-    @State private var showFood:Bool = false
+    @EnvironmentObject var viewRouter: ViewRouter
     var body: some View {
         NavigationStack{
             ImageBackground()
@@ -81,7 +81,8 @@ struct ReservedComplete:View {
                             .padding(.horizontal)
                         
                         Button (action:{
-                            showFood = true
+                            viewRouter.currentPage = .dashboard
+                            viewRouter.numberOfPage = 0
                         }){
                             Text("Order Food")
                                 .font(.headline)
@@ -89,10 +90,6 @@ struct ReservedComplete:View {
                         .buttonStyle(GradientButton())
                         .padding(.horizontal, 40)
                         .padding(.vertical)
-                        .navigationDestination(isPresented: $showFood){
-//                            Dashboard(selectedTab: 2)
-//                                .navigationBarBackButtonHidden(true)
-                        }
                     }
                 )
         }
