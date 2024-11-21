@@ -33,13 +33,6 @@ struct BestOffer:View {
                 .font(.title2)
             Image("hot")
             Spacer()
-//            Button(action: {}, label: {
-//                HStack{
-//                    Text("See all")
-//                    Image(systemName: "chevron.forward")
-//                }
-//                .foregroundColor(Color.gray)
-//            })
         }
         Spacer()
         ScrollView(.horizontal, showsIndicators: false){

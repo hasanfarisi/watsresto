@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OrderComplete: View {
     @State private var feedback:String = ""
-    @State private var isShowing:Bool = false
+    @EnvironmentObject var viewRouter: ViewRouter
     
     var body: some View {
 //        NavigationStack{
@@ -36,6 +36,8 @@ struct OrderComplete: View {
                             .padding(.vertical)
                         HStack{
                             Button(action: {
+                                viewRouter.currentPage = .dashboard
+                                viewRouter.numberOfPage = 0
                             }){
                                 Text("Submit")
                                     .font(.callout)
@@ -44,17 +46,14 @@ struct OrderComplete: View {
                             .frame(width: 200)
                             Spacer()
                             Button(action: {
-                                isShowing = true
+                                viewRouter.currentPage = .dashboard
+                                viewRouter.numberOfPage = 0
                             }){
                                 Text("Skip")
                                     .font(.callout)
                             }
                             .buttonStyle(FlatButton())
                             .frame(width: 100)
-                            .navigationDestination(isPresented: $isShowing){
-                                Dashboard(selectedTab: 0)
-                                    .navigationBarBackButtonHidden(true)
-                            }
                         }
                         .padding(.horizontal, 30)
                     }
@@ -91,8 +90,8 @@ struct ReservedComplete:View {
                         .padding(.horizontal, 40)
                         .padding(.vertical)
                         .navigationDestination(isPresented: $showFood){
-                            Dashboard(selectedTab: 2)
-                                .navigationBarBackButtonHidden(true)
+//                            Dashboard(selectedTab: 2)
+//                                .navigationBarBackButtonHidden(true)
                         }
                     }
                 )
@@ -101,5 +100,5 @@ struct ReservedComplete:View {
 }
 
 #Preview {
-    ReservedComplete()
+    OrderComplete()
 }

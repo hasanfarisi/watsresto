@@ -14,8 +14,9 @@ struct ContentView: View {
             ZStack{
                 if viewRouter.currentPage == .main || viewRouter.currentPage == nil {
                     Welcome()
+                        .environmentObject(viewRouter)
                 } else if viewRouter.currentPage == .dashboard {
-                    Dashboard(selectedTab: viewRouter.numberOfPage)
+                    Dashboard()
                         .environmentObject(viewRouter)
                 } else if viewRouter.currentPage == .authentication {
                     if viewRouter.numberOfPage == 0 {

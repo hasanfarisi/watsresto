@@ -49,7 +49,7 @@ struct TabItemView: View {
                 Image(systemName: icon)
                     .font(.largeTitle)
                     .foregroundColor(isSelected ? .green : .gray)
-                    .frame(width: 80)
+                    .frame(width: 50)
                 Text(label)
                     .foregroundColor(isSelected ? .green : .gray)
                     .font(.headline)
@@ -67,6 +67,6 @@ struct TabItemView: View {
                     .offset(x: 10, y: -10)
             }
         }
-        .frame(width: 120, height: 100)
+        .frame(width: 100, height: 80)
     }
 }

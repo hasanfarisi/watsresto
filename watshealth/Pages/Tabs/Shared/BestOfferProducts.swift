@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct BestOfferProducts: View {
+    @EnvironmentObject var viewRouter: ViewRouter
     @State public var imgMenu:String = ""
     @State public var title:String = ""
     @State public var detail:String = ""
     @State public var price:String = ""
     var body: some View {
             Button(action: {
-                
+                viewRouter.numberOfPage = 12 //FoodDetail
+                viewRouter.currentPage = .dashboard
             }, label: {
                 VStack{
                     Image(imgMenu)

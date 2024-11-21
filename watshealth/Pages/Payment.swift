@@ -14,10 +14,10 @@ struct Payment: View {
     var body: some View {
         VStack() {
             HStack(spacing: 0) {
-                TabItemView(icon: "hand.palm.facing", label: "Cash", isSelected: selectedTab == .cash)
-                    .onTapGesture {
-                        selectedTab = .cash
-                    }
+//                TabItemView(icon: "hand.palm.facing", label: "Cash", isSelected: selectedTab == .cash)
+//                    .onTapGesture {
+//                        selectedTab = .cash
+//                    }
                 TabItemView(icon: "creditcard", label: "Card", isSelected: selectedTab == .masterCard)
                     .onTapGesture {
                         selectedTab = .masterCard
@@ -26,75 +26,134 @@ struct Payment: View {
                     .onTapGesture {
                         selectedTab = .qris
                     }
-            }
-            .padding(.top)
-            Spacer()
+            }            
             if selectedTab == .cash {
-                Text("Cash Payment Selected")
-                    .font(.title)
-                    .padding()
+                cash()
             }else if selectedTab == .masterCard {
-                Text("Card Payment Selected")
-                    .font(.title)
-                    .padding()
+                masterCard()
             } else {
-                VStack {
-                    VStack {
-                        Text("Scan for Payment")
-                            .font(.title2)
-                            .bold()
-                            .padding()
-                        Image("qris")
-                            .resizable()
-                            .frame(width: 200, height: 200)
-                            .padding()
-                        Text("QR Code was accepted by")
-                            .font(.title3)
-                            .padding()
-                        HStack{
-                            VStack{
-                                Image(systemName: "wallet.bifold.fill")
-                                    .font(.title)
-                                Text("Wallet a")
-                                    .font(.callout)
-                            }
-                            .foregroundColor(Color.blue)
-                            VStack{
-                                Image(systemName: "wallet.bifold")
-                                    .font(.title)
-                                Text("Wallet b")
-                                    .font(.callout)
-                            }
-                            .foregroundColor(Color.orange)
-                        }
-                        Spacer()
-                    }
-                    .padding()
-                    .background(Color(hex: "F7F8F9"))
-                    .cornerRadius(10)
-                    VStack{
-                        LabelDescriptionView(label: "Total", description: "Rp. 28.000")
-                                    .previewLayout(.sizeThatFits)
-                                    .bold()
-                        Spacer()
-                        Button (action:{
-                            viewRouter.numberOfPage = 5
-                            viewRouter.currentPage = .dashboard
-                        }){
-                            Text("Pay and Confirm")
-                                .font(.headline)
-                        }
-                        .buttonStyle(GradientButton())
-                        .padding(.horizontal, 20)
-                    }
-                    .padding()
-                    .cornerRadius(10)
+                qris()
+            }
+            VStack{
+                LabelDescriptionView(label: "Total", description: "Rp. 28.000")
+                    .previewLayout(.sizeThatFits)
+                    .bold()
+                Spacer()
+                Button (action:{
+                    viewRouter.currentPage = .dashboard
+                    viewRouter.numberOfPage = 5
+                }){
+                    Text("Pay and Confirm")
+                        .font(.headline)
                 }
-                .frame(maxHeight: .infinity)
+                .buttonStyle(GradientButton())
+                .padding(.horizontal, 20)
+            }
+            .cornerRadius(10)
+        }
+    }
+}
+
+struct qris:View {
+    var body: some View {
+        VStack {
+            VStack {
+                Image("qris")
+                    .resizable()
+                    .frame(width: 280, height: 220)
+                    .padding()
+//                Text("QR Code was accepted by")
+//                    .font(.title3)
+//                    .padding()
+                HStack{
+                    iconQris(iconName: "wallet.bifold", title: "Wallet A", colorHex: "529CE0")
+                    iconQris(iconName: "wallet.bifold", title: "Wallet B", colorHex: "34AA12")
+                    iconQris(iconName: "wallet.bifold", title: "Wallet C", colorHex: "FF8610")
+                }
                 Spacer()
             }
-            Spacer()
+            .padding()
+            .background(Color(hex: "F7F8F9"))
+            .cornerRadius(10)
+            Button(action: {}){
+                HStack{
+                    Image(systemName: "square.and.arrow.down")
+                    Text("Download Qris")
+                }
+            }
+            .buttonStyle(FlatButton())
+            .padding(.horizontal, 30)
         }
+        .frame(maxHeight: .infinity)
+    }
+}
+
+struct masterCard:View {
+    var body: some View {
+        VStack {
+            VStack {
+                Image("blankCard")
+                    .resizable()
+                    .frame(width: 310, height: 160)
+                    .padding()
+                Text("No master card added")
+                    .font(.title3)
+                    .bold()
+                    .padding()
+                Text("You can add a mastercard and save it for later")
+                    .font(.callout)
+                    .frame(width: 220, height: 80)
+                    .multilineTextAlignment(.center)
+            }
+            .background(Color(hex: "F7F8F9"))
+            .cornerRadius(10)
+            Button(action: {}){
+                HStack{
+                    Image(systemName: "plus.app")
+                    Text("ADD NEW CARD")
+                }
+            }
+            .buttonStyle(FlatButton())
+            .padding(.horizontal, 30)
+        }
+        .frame(maxHeight: .infinity)
+        Spacer()
+    }
+}
+
+struct cash:View{
+    var body: some View{
+        VStack {
+            VStack {
+                Text("Please complete your transaction at Cashier")
+                    .font(.title3)
+                    .bold()
+                    .frame(width: 310, height: 80)
+                    .multilineTextAlignment(.center)
+            }
+            .padding()
+            .background(Color(hex: "F7F8F9"))
+            .cornerRadius(10)
+        }
+        .frame(maxHeight: .infinity)
+        Spacer()
+            .padding(.vertical,40)
+    }
+}
+
+struct iconQris:View{
+    let iconName: String
+    let title:String
+    let colorHex:String
+    var body: some View{
+        VStack{
+            Image(systemName: iconName)
+                .font(.title)
+            Text(title)
+                .font(.caption2)
+        }
+        .foregroundColor(Color(hex: colorHex))
+        .padding(.horizontal,22)
     }
 }
 
@@ -104,66 +163,8 @@ enum PaymentMethod {
     case qris
 }
 
-//struct qris:View {
-//    var body: some View {
-////        VStack {
-////            VStack {
-////                Text("Scan for Payment")
-////                    .font(.title2)
-////                    .bold()
-////                    .padding()
-////                Image("qris")
-////                    .resizable()
-////                    .frame(width: 200, height: 200)
-////                    .padding()
-////                Text("QR Code was accepted by")
-////                    .font(.title3)
-////                    .padding()
-////                HStack{
-////                    VStack{
-////                        Image(systemName: "wallet.bifold.fill")
-////                            .font(.title)
-////                        Text("Wallet a")
-////                            .font(.callout)
-////                    }
-////                    .foregroundColor(Color.blue)
-////                    VStack{
-////                        Image(systemName: "wallet.bifold")
-////                            .font(.title)
-////                        Text("Wallet b")
-////                            .font(.callout)
-////                    }
-////                    .foregroundColor(Color.orange)
-////                }
-////                Spacer()
-////            }
-////            .padding()
-////            .background(Color(hex: "F7F8F9"))
-////            .cornerRadius(10)
-////            VStack{
-////                LabelDescriptionView(label: "Total", description: "Rp. 28.000")
-////                            .previewLayout(.sizeThatFits)
-////                            .bold()
-////                Spacer()
-////                Button (action:{
-////                    viewRouter.numberOfPage = 5
-////                    viewRouter.currentPage = .dashboard
-////                }){
-////                    Text("Pay and Confirm")
-////                        .font(.headline)
-////                }
-////                .buttonStyle(GradientButton())
-////                .padding(.horizontal, 20)
-////            }
-////            .padding()
-////            .cornerRadius(10)
-////        }
-////        .frame(maxHeight: .infinity)
-////        Spacer()
-//    }
-//}
 
 #Preview {
-    Payment()
+    Dashboard()
         .environmentObject(ViewRouter())
 }

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct Cart: View {
     @State private var isOrderComplete:Bool = false
+    @EnvironmentObject var viewRouter: ViewRouter
+    
     var body: some View {
         VStack{
             ScrollView{
@@ -60,17 +62,14 @@ struct Cart: View {
                     .padding(.horizontal,20)
                     .padding(.vertical,10)
                     Button(action: {
-                        isOrderComplete = true
+                        viewRouter.currentPage = .dashboard
+                        viewRouter.numberOfPage = 7
                     }){
                         Text("Place My Order")
                             .font(.callout)
                     }
                     .buttonStyle(FlatButton())
                     .padding(10)
-                    .navigationDestination(isPresented: $isOrderComplete){
-                        Payment()
-                            .environmentObject(ViewRouter())
-                    }
                 }
                 .padding(.horizontal,20)
                 .foregroundColor(Color.white)

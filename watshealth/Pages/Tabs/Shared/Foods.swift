@@ -40,11 +40,12 @@ struct FoodsIndex: View {
 
 struct FoodDetail: View {
     @EnvironmentObject var viewRouter: ViewRouter
+    
     var body: some View {
         ZStack(alignment: .bottomLeading){
             ScrollView{
                 Image("menuDetail1")
-                    .resizable()                    
+                    .resizable()
                     .frame(height: 250)
                 VStack(alignment: .leading){
                     HStack{
@@ -93,7 +94,7 @@ struct FoodDetail: View {
                     }
                 }
                 .padding(.horizontal)
-                .padding(.vertical)
+                .padding(.vertical, 20)
             }
             Button (action:{
                 viewRouter.numberOfPage = 3 //Cart
@@ -104,17 +105,19 @@ struct FoodDetail: View {
             }
             .buttonStyle(GradientButton())
             .padding(.horizontal, 40)
+            .padding(.vertical, 10)
         }
     }
 }
 
 struct Meal:View {
     let index:Int
-    @State private var showFoodDetail:Bool = false
     @EnvironmentObject var viewRouter: ViewRouter
+    
     var body: some View {
         Button (action:{
-            showFoodDetail = true
+            viewRouter.numberOfPage = 12 //FoodDetail
+            viewRouter.currentPage = .dashboard
         }){
             ZStack{
                 RoundedRectangle(cornerRadius: 16)
@@ -145,13 +148,10 @@ struct Meal:View {
             }
             .frame(width: 150, height: 250)
         }
-        .navigationDestination(isPresented: $showFoodDetail){
-            FoodDetail()
-                .environmentObject(viewRouter)
-        }
     }
 }
 
 #Preview {
-    FoodsIndex()
+    FoodDetail()
+        .environmentObject(ViewRouter())
 }

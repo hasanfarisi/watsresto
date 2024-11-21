@@ -1,81 +1,137 @@
 import SwiftUI
 
-//struct PaymentTabView: View {
-//    @State private var selectedTab: PaymentMethod = .cash // Tracks the selected tab
-//
-//    var body: some View {
-//        VStack {
-//            HStack(spacing: 20) {
-//                // Cash Tab
-//                TabItemView(icon: "hand.point.right.fill", label: "Cash", isSelected: selectedTab == .cash)
-//                    .onTapGesture {
-//                        selectedTab = .cash
-//                    }
-//
-//                // MasterCard Tab
-//                TabItemView(icon: "creditcard.fill", label: "MasterCard", isSelected: selectedTab == .masterCard)
-//                    .onTapGesture {
-//                        selectedTab = .masterCard
-//                    }
-//            }
-//            .padding(.top)
-//
-//            // Display content based on selected tab
-//            Spacer()
-//            if selectedTab == .cash {
-//                Text("Cash Payment Selected")
-//                    .font(.title)
-//                    .padding()
-//            } else {
-//                Text("MasterCard Payment Selected")
-//                    .font(.title)
-//                    .padding()
-//            }
-//            Spacer()
-//        }
-//    }
-//}
-//
-//enum PaymentMethod {
-//    case cash
-//    case masterCard
-//}
-//
-//struct TabItemView: View {
-//    var icon: String
-//    var label: String
-//    var isSelected: Bool
-//
-//    var body: some View {
-//        ZStack(alignment: .topTrailing) {
-//            VStack {
-//                Image(systemName: icon)
-//                    .font(.largeTitle)
-//                    .foregroundColor(isSelected ? .blue : .gray)
-//                Text(label)
-//                    .foregroundColor(isSelected ? .blue : .gray)
-//                    .font(.headline)
-//            }
-//            .padding()
-//            .background(
-//                RoundedRectangle(cornerRadius: 10)
-//                    .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 2) // Border when selected
-//            )
-//            
-//            // Checkmark for selected tab
-//            if isSelected {
-//                Image(systemName: "checkmark.circle.fill")
-//                    .foregroundColor(.green)
-//                    .offset(x: 10, y: -10)
-//            }
-//        }
-//        .frame(width: 120, height: 100) // Adjust size as needed
-//    }
-//}
+enum AppPage {
+    case home
+    case profile
+    case settings
+}
 
-//struct PaymentTabView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PaymentTabView()
-//            .previewLayout(.sizeThatFits)
-//    }
-//}
+struct MainView: View {
+    @State private var currentPage: AppPage = .home
+    
+    var body: some View {
+        VStack {
+            // Display the current page
+            ViewBuilderForPage(currentPage: currentPage, navigate: { newPage in
+                currentPage = newPage
+            })
+            
+            Spacer()
+            
+            // Navigation buttons
+            HStack {
+                Button(action: {
+                    currentPage = .home
+                }) {
+                    Text("Home")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                
+                Button(action: {
+                    currentPage = .profile
+                }) {
+                    Text("Profile")
+                        .padding()
+                        .background(Color.green)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                
+                Button(action: {
+                    currentPage = .settings
+                }) {
+                    Text("Settings")
+                        .padding()
+                        .background(Color.orange)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+            }
+            .padding()
+        }
+    }
+}
+
+struct ViewBuilderForPage: View {
+    let currentPage: AppPage
+    let navigate: (AppPage) -> Void
+    
+    var body: some View {
+        switch currentPage {
+        case .home:
+            HomePage(navigate: navigate)
+        case .profile:
+            ProfilePage(navigate: navigate)
+        case .settings:
+            SettingsPage(navigate: navigate)
+        }
+    }
+}
+
+// Example Pages
+struct HomePage: View {
+    let navigate: (AppPage) -> Void
+    var body: some View {
+        VStack {
+            Text("Welcome to Home Page")
+                .font(.largeTitle)
+            Button(action: {
+                navigate(.profile)
+            }) {
+                Text("Go to Profile")
+                    .padding()
+                    .background(Color.green)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+            }
+        }
+        .padding()
+    }
+}
+
+struct ProfilePage: View {
+    let navigate: (AppPage) -> Void
+    var body: some View {
+        VStack {
+            Text("Welcome to Profile Page")
+                .font(.largeTitle)
+            Button(action: {
+                navigate(.settings)
+            }) {
+                Text("Go to Settings")
+                    .padding()
+                    .background(Color.orange)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+            }
+        }
+        .padding()
+    }
+}
+
+struct SettingsPage: View {
+    let navigate: (AppPage) -> Void
+    var body: some View {
+        VStack {
+            Text("Welcome to Settings Page")
+                .font(.largeTitle)
+            Button(action: {
+                navigate(.home)
+            }) {
+                Text("Go to Home")
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+            }
+        }
+        .padding()
+    }
+}
+
+#Preview {
+    MainView()
+}
